@@ -31,6 +31,7 @@ public class FireAndForgetExample {
                 .transport(TcpServerTransport.create("localhost", port))
                 .start()
                 .subscribe();
+        
         System.out.printf("server is started on port:%d%n", port);
 
         RSocket socket
