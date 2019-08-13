@@ -11,7 +11,7 @@ It enables the following symmetric interaction models via async message passing 
 
 There are several implementations provided now, including Javascript, Java, Kotlin etc.  In this post, we will explore the official Java implementation- [rsocket-java](https://github.com/rsocket/rsocket-java), and later we will have a look at the RSocket integration provided in the latest Spring framework (and  Spring Boot).
 
-The following is an example showing  rsocket-java.
+The following example is showing  rsocket-java.
 
 First of all, create a RSocket server and run it on localhost:7000.
 
@@ -72,7 +72,7 @@ Using  [Spring initializr](https://start.spring.io),  you can generate a Spring 
     * Options/Java : 11
 * Dependencies: RSocket, Lombok
 
- Generate the codes in a zip archive for downloading. Download and extract it into your favorite IDE. Open the *pom.xml*  in your IDE editor, there are two dependencies added.
+The generated codes are archived into a  zip file for downloading. Download and extract it into your favorite IDE. Open the *pom.xml*  in your IDE editor, there are two dependencies added.
 
 ```xml
 <dependency>
@@ -167,15 +167,17 @@ class Greeting {
 
 ```
 
-Start the client and server respectively.   And try to use `curl` to access `http://localhost:8080`.
+Start the client and server respectively.   And try to  access `http://localhost:8080` by `curl` .
 
 ```bash
 curl http://localhost:8080
 ```
 
-In the output console the server application, it print the result like this.
+In the output console of the server application, you can see the information like the following.
 
 ![msg](./msg.png)
+
+As you see, the sent message is received.
 
 Check the source codes from  [Github](https://github.com/hantsy/rsocket-sample).
 

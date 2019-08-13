@@ -4,11 +4,16 @@ Sample codes of RSocket Java  and Spring RSocket integration.
 
 
 
+## Guide
+
+[Using Rsocket with Spring Boot] (https://medium.com/@hantsy/using-rsocket-with-spring-boot-cfc67924d06a)
+
+## Source Codes
+
 * **vanilla**  rsocket-java sample
-* **consumer** Spring Boot based application, as RSocket consumer side.
-* **producer** Spring Boot based application,  as RSocket producer side.
+* **boot** Spring Boot based application, including client and server.
 
-
+  
 
 
 
