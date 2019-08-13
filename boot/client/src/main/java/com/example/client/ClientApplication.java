@@ -1,7 +1,8 @@
-package com.example.consumer;
+package com.example.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
-public class ConsumerApplication {
+public class ClientApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ConsumerApplication.class, args);
+        SpringApplication.run(ClientApplication.class, args);
     }
 
     @Bean
@@ -25,13 +26,10 @@ public class ConsumerApplication {
 }
 
 @RestController
+@RequiredArgsConstructor
 class GreetingController {
 
     private final RSocketRequester requester;
-
-    public GreetingController(RSocketRequester requester) {
-        this.requester = requester;
-    }
 
     @GetMapping
     Mono<Void> hello() {

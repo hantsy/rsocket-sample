@@ -1,6 +1,5 @@
-package com.example.producer;
+package com.example.server;
 
-import io.rsocket.Payload;
 import java.time.Instant;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +10,10 @@ import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
-public class ProducerApplication {
+public class ServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ProducerApplication.class, args);
+        SpringApplication.run(ServerApplication.class, args);
     }
 
 }
@@ -28,6 +27,7 @@ class GreetingServerController {
         log.info("received: {} at {}", p, Instant.now());
         return Mono.empty();
     }
+    
 }
 
 @Data
