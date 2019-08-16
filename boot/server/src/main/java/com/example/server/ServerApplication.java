@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
@@ -42,7 +43,14 @@ class GreetingServerController {
     public Flux<String> greetStream(@Payload Greeting p) {
         log.info("received:  {} at {}", p, Instant.now());
         return Flux.interval(Duration.ofSeconds(1))
-                .map(i -> "Hello #" + i + "," + p.getMessage() + " at " + Instant.now());
+                .map(i -> "greet-stream#(Hello #" + i + "," + p.getMessage() + ") at " + Instant.now());
+    }
+
+    @MessageMapping("greet-channel")
+    public Flux<String> greetChannel(@Payload Flux<Greeting> p) {
+        log.info("received:  {} at {}", p, Instant.now());
+        return p.delayElements(Duration.ofSeconds(1))
+                .map(m -> "greet-channel#(" + m + ") at " + Instant.now());
     }
 
 }

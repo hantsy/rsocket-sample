@@ -1,5 +1,6 @@
 package com.example.client;
 
+import java.time.Duration;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +51,18 @@ class GreetingController {
     Flux<String> greetStream() {
         return this.requester.route("greet-stream").data(new Greeting("Welcome to Rsocket"))
                 .retrieveFlux(String.class)
-                .doOnNext(msg->log.info("received messages::" +msg));
+                .doOnNext(msg -> log.info("received messages::" + msg));
+    }
+
+    @GetMapping(value = "channel", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    Flux<String> greetChannel() {
+        return this.requester.route("greet-channel")
+                .data(
+                        Flux.range(0, 10)
+                                .map(i -> new Greeting("Welcome to Rsocket #" + i))
+                )
+                .retrieveFlux(String.class)
+                .doOnNext(msg -> log.info("received messages::" + msg));
     }
 }
 
