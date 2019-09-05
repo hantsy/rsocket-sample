@@ -11,7 +11,7 @@ It enables the following symmetric interaction models via async message passing 
 
 There are several implementations provided now, including Javascript, Java, Kotlin etc.  In this post, we will explore the official Java implementation- [rsocket-java](https://github.com/rsocket/rsocket-java), and later we will have a look at the RSocket integration provided in the latest Spring framework (and  Spring Boot).
 
-The following example is showing  rsocket-java.
+The following example is showing **request/response** usage with  rsocket-java.
 
 First of all, create a RSocket server and run it on localhost:7000.
 
@@ -98,7 +98,7 @@ Start the application in IDE  or run `mvn spring-boot:run`,  you will see the se
 
 ![run](./run.png)
 
-
+> You can also use Rsosket with Webflux , just add extra `spring-boot-starter-webflux` in the project dependencies.
 
 Create a messaging controller . 
 

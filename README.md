@@ -2,9 +2,7 @@
 
 Sample codes of RSocket Java  and Spring RSocket integration.
 
-
-
-## Guide
+## Docs
 
 [Using Rsocket with Spring Boot](https://medium.com/@hantsy/using-rsocket-with-spring-boot-cfc67924d06a)
 
