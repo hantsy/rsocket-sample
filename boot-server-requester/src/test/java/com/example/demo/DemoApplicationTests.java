@@ -28,6 +28,7 @@ class DemoApplicationTests {
                 .dataMimeType(MimeTypeUtils.APPLICATION_JSON)
                 //				.rsocketFactory(factory -> factory.addRequesterPlugin(payloadInterceptor))
                 .rsocketStrategies(this.handler.getRSocketStrategies())
+                .setupRoute("greet.*")
                 .connectTcp("localhost", 7000)
                 .block();
     }

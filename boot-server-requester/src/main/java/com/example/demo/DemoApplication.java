@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import io.rsocket.ConnectionSetupPayload;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -51,8 +52,8 @@ public class DemoApplication {
 class GreetingController {
 
     @ConnectMapping("greet.*")
-    public void setup(RSocketRequester requester) {
-        log.info("@ConnectMapping(greet*), setup");
+    public void setup( RSocketRequester requester) {
+                log.info("@ConnectMapping(greet*), setup");
     }
 
     @MessageMapping("hello")
