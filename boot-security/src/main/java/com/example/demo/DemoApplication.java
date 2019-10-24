@@ -1,21 +1,13 @@
 package com.example.demo;
 
-import io.rsocket.frame.decoder.PayloadDecoder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.PropertyMapper;
-import org.springframework.boot.rsocket.context.RSocketServerBootstrap;
-import org.springframework.boot.rsocket.netty.NettyRSocketServerFactory;
-import org.springframework.boot.rsocket.server.RSocketServer;
-import org.springframework.boot.rsocket.server.RSocketServerFactory;
 import org.springframework.boot.rsocket.server.ServerRSocketFactoryProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.buffer.NettyDataBufferFactory;
-import org.springframework.http.client.reactive.ReactorResourceFactory;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -30,12 +22,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.rsocket.core.PayloadSocketAcceptorInterceptor;
+import org.springframework.security.rsocket.core.SecuritySocketAcceptorInterceptor;
 import org.springframework.security.rsocket.metadata.BasicAuthenticationDecoder;
 import org.springframework.security.rsocket.metadata.BasicAuthenticationEncoder;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Mono;
 
-import java.net.InetAddress;
 import java.time.Instant;
 
 @SpringBootApplication
@@ -106,41 +98,12 @@ class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-    //see: https://github.com/spring-projects/spring-security/issues/7497
+    // see: https://github.com/spring-projects/spring-security/issues/7497
+    // and https://github.com/spring-projects/spring-security/blob/5.2.0.RELEASE/samples/boot/hellorsocket/src/main/java/sample/HelloRSocketSecurityConfig.java
     @Bean
-    ReactorResourceFactory reactorResourceFactory() {
-        return new ReactorResourceFactory();
-    }
-
-    @Bean
-    RSocketServerFactory rSocketServerFactory(ReactorResourceFactory resourceFactory,
-                                              ServerRSocketFactoryProcessor frameDecoderServerFactoryProcessor) throws Exception {
-        NettyRSocketServerFactory factory = new NettyRSocketServerFactory();
-        factory.setResourceFactory(resourceFactory);
-        factory.setTransport(RSocketServer.Transport.TCP);
-        PropertyMapper map = PropertyMapper.get().alwaysApplyingWhenNonNull();
-        map.from(InetAddress.getByName("localhost")).to(factory::setAddress);
-        map.from(7000).to(factory::setPort);
-        factory.addSocketFactoryProcessors(frameDecoderServerFactoryProcessor);
-        return factory;
-    }
-
-    @Bean
-    RSocketServerBootstrap rSocketServerBootstrap(RSocketServerFactory rSocketServerFactory,
-                                                  RSocketMessageHandler rSocketMessageHandler) {
-        return new RSocketServerBootstrap(rSocketServerFactory, rSocketMessageHandler.responder());
-    }
-
-    @Bean
-    ServerRSocketFactoryProcessor frameDecoderServerFactoryProcessor(
-            RSocketMessageHandler rSocketMessageHandler, PayloadSocketAcceptorInterceptor rsocketInterceptor) {
-        return (serverRSocketFactory) -> {
-            if (rSocketMessageHandler.getRSocketStrategies()
-                    .dataBufferFactory() instanceof NettyDataBufferFactory) {
-                serverRSocketFactory.frameDecoder(PayloadDecoder.ZERO_COPY);
-            }
-            return serverRSocketFactory.addSocketAcceptorPlugin(rsocketInterceptor);
-        };
+    ServerRSocketFactoryProcessor springSecurityServerRSocketFactoryProcessor(
+            SecuritySocketAcceptorInterceptor interceptor) {
+        return builder -> builder.addSocketAcceptorPlugin(interceptor);
     }
 
 }
