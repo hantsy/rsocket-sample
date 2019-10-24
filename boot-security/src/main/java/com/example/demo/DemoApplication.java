@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.rsocket.RSocketStrategies;
-import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.rsocket.EnableRSocketSecurity;
 import org.springframework.security.config.annotation.rsocket.RSocketSecurity;
