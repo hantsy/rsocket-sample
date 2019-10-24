@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.rsocket.messaging.RSocketStrategiesCustomizer;
 import org.springframework.boot.rsocket.server.ServerRSocketFactoryProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,16 +45,8 @@ public class DemoApplication {
 class SecurityConfig {
 
     @Bean
-    public RSocketMessageHandler messageHandler() {
-        RSocketMessageHandler handler = new RSocketMessageHandler();
-        handler.setRSocketStrategies(rsocketStrategies());
-        return handler;
-    }
-
-    @Bean
-    public RSocketStrategies rsocketStrategies() {
-        return RSocketStrategies.builder()
-                .decoder(new BasicAuthenticationDecoder(), new Jackson2JsonDecoder())
+    RSocketStrategiesCustomizer rSocketStrategiesCustomizer() {
+        return (b) -> b.decoder(new BasicAuthenticationDecoder(), new Jackson2JsonDecoder())
                 .encoder(new BasicAuthenticationEncoder(), new Jackson2JsonEncoder())
                 .build();
     }

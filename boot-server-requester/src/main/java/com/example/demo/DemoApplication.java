@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.rsocket.messaging.RSocketStrategiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
@@ -30,20 +31,6 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
-    @Bean
-    public RSocketMessageHandler messageHandler() {
-        RSocketMessageHandler handler = new RSocketMessageHandler();
-        handler.setRSocketStrategies(rsocketStrategies());
-        return handler;
-    }
-
-    @Bean
-    public RSocketStrategies rsocketStrategies() {
-        return RSocketStrategies.builder()
-                .decoder(new Jackson2JsonDecoder())
-                .encoder(new Jackson2JsonEncoder())
-                .build();
-    }
 }
 
 
