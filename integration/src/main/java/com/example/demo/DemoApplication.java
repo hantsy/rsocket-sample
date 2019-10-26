@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class DemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServerApplication.class, args);
+        SpringApplication.run(DemoApplication.class, args);
     }
 
 }
