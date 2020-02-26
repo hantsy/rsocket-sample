@@ -2,6 +2,7 @@ package com.example.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.rsocket.context.LocalRSocketServerPort;
 import org.springframework.boot.rsocket.context.RSocketServerInitializedEvent;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -22,8 +23,9 @@ import static org.springframework.security.rsocket.metadata.UsernamePasswordMeta
 @TestPropertySource(properties = "spring.rsocket.server.port=0")
 class DemoApplicationTests {
 
-    // FIXME: Waiting for @LocalRSocketServerPort
-    // https://github.com/spring-projects/spring-boot/pull/18287
+
+    @LocalRSocketServerPort
+    int port;
 
     @Autowired
     RSocketRequester.Builder requester;
@@ -31,7 +33,7 @@ class DemoApplicationTests {
     @Test
     public void retrieveMonoWhenSecureThenDenied() throws Exception {
         RSocketRequester requester = this.requester
-                .connectTcp("localhost", getPort())
+                .connectTcp("localhost", this.port)
                 .block();
         String data = "hantsy";
         assertThatThrownBy(
@@ -50,7 +52,7 @@ class DemoApplicationTests {
         RSocketRequester requester = this.requester
                 .rsocketStrategies(builder -> builder.encoder(new BasicAuthenticationEncoder()))
                 .setupMetadata(credentials, BASIC_AUTHENTICATION_MIME_TYPE)
-                .connectTcp("localhost", getPort())
+                .connectTcp("localhost", this.port)
                 .block();
         String data = "hantsy";
         assertThatThrownBy(
@@ -69,7 +71,7 @@ class DemoApplicationTests {
         RSocketRequester requester = this.requester
                 .rsocketStrategies(builder -> builder.encoder(new BasicAuthenticationEncoder()))
                 .setupMetadata(credentials, BASIC_AUTHENTICATION_MIME_TYPE)
-                .connectTcp("localhost", getPort())
+                .connectTcp("localhost", this.port)
                 .block();
         UsernamePasswordMetadata adminCredentials = new UsernamePasswordMetadata("admin", "password");
 
@@ -84,21 +86,23 @@ class DemoApplicationTests {
     }
 
 
-    @Autowired
-    Config config;
-
-    private int getPort() {
-        return this.config.port;
-    }
-
-    @TestConfiguration
-    static class Config implements ApplicationListener<RSocketServerInitializedEvent> {
-        private int port;
-
-        @Override
-        public void onApplicationEvent(RSocketServerInitializedEvent event) {
-            this.port = event.getServer().address().getPort();
-        }
-    }
+    // FIXME: Waiting for @LocalRSocketServerPort
+    // https://github.com/spring-projects/spring-boot/pull/18287
+//    @Autowired
+//    Config config;
+//
+//    private int getPort() {
+//        return this.config.port;
+//    }
+//
+//    @TestConfiguration
+//    static class Config implements ApplicationListener<RSocketServerInitializedEvent> {
+//        private int port;
+//
+//        @Override
+//        public void onApplicationEvent(RSocketServerInitializedEvent event) {
+//            this.port = event.getServer().address().getPort();
+//        }
+//    }
 
 }

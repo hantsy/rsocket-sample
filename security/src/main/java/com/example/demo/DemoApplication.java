@@ -41,13 +41,12 @@ public class DemoApplication {
 @Configuration
 @EnableRSocketSecurity
 class SecurityConfig {
-
-    @Bean
-    RSocketStrategiesCustomizer rSocketStrategiesCustomizer() {
-        return (b) -> b.decoder(new BasicAuthenticationDecoder(), new Jackson2JsonDecoder())
-                .encoder(new BasicAuthenticationEncoder(), new Jackson2JsonEncoder())
-                .build();
-    }
+//    @Bean
+//    RSocketStrategiesCustomizer rSocketStrategiesCustomizer() {
+//        return (b) -> b.decoder(new BasicAuthenticationDecoder(), new Jackson2JsonDecoder())
+//                .encoder(new BasicAuthenticationEncoder(), new Jackson2JsonEncoder())
+//                .build();
+//    }
 
     @Bean
     public PayloadSocketAcceptorInterceptor rsocketInterceptor(RSocketSecurity rsocket) {
@@ -70,12 +69,12 @@ class SecurityConfig {
     @Bean
     public MapReactiveUserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         UserDetails adminUser = User.withUsername("admin")
-                .passwordEncoder(p -> passwordEncoder.encode(p))
+                .passwordEncoder(passwordEncoder::encode)
                 .password("password")
                 .roles("ADMIN")
                 .build();
         UserDetails setupUser = User.withUsername("setup")
-                .passwordEncoder(p -> passwordEncoder.encode(p))
+                .passwordEncoder(passwordEncoder::encode)
                 .password("password")
                 .roles("SETUP")
                 .build();
@@ -91,11 +90,11 @@ class SecurityConfig {
 
     // see: https://github.com/spring-projects/spring-security/issues/7497
     // and https://github.com/spring-projects/spring-security/blob/5.2.0.RELEASE/samples/boot/hellorsocket/src/main/java/sample/HelloRSocketSecurityConfig.java
-    @Bean
-    ServerRSocketFactoryProcessor springSecurityServerRSocketFactoryProcessor(
-            SecuritySocketAcceptorInterceptor interceptor) {
-        return builder -> builder.addSocketAcceptorPlugin(interceptor);
-    }
+//    @Bean
+//    ServerRSocketFactoryProcessor springSecurityServerRSocketFactoryProcessor(
+//            SecuritySocketAcceptorInterceptor interceptor) {
+//        return builder -> builder.addSocketAcceptorPlugin(interceptor);
+//    }
 
 }
 
