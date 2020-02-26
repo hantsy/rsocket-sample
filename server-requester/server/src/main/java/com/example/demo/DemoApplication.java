@@ -35,18 +35,26 @@ class GreetingController {
 
     @ConnectMapping("connect")
     void setup(RSocketRequester requester, @Payload String user) {
-        log.info("@ConnectMapping(connect)");
+        log.info("@ConnectMapping(connect), user:{}", user);
         requester.rsocket()
                 .onClose()
                 .doFinally(
                         f -> REQESTER_MAP.remove(user, requester)
                 );
         REQESTER_MAP.put(user, requester);
+        log.info("send status back to client...");
+        requester.route("status").data("user:" + user + " is connected!")
+                .retrieveMono(String.class)
+                .subscribe(
+                        data -> log.info("received data from the client: {}", data),
+                        error -> log.error("error: {}", error),
+                        () -> log.info("done")
+                );
     }
 
     @MessageMapping("hello")
     Mono<String> ping(@Payload String message) {
-        log.info("@MessageMapping(hello), payload : {}" , message);
+        log.info("@MessageMapping(hello), payload : {}", message);
         return Mono.just("received (" + message + ") at " + LocalDateTime.now());
     }
 }

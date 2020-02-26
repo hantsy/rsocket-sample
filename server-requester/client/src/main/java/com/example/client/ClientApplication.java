@@ -1,24 +1,20 @@
 package com.example.client;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.rsocket.RSocketRequester;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.MimeType;
+import org.springframework.messaging.rsocket.RSocketStrategies;
+import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler;
 import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 @SpringBootApplication
@@ -29,13 +25,25 @@ public class ClientApplication {
     }
 
     @Bean
-    public RSocketRequester rSocketRequester(RSocketRequester.Builder b) {
+    public RSocketRequester rSocketRequester(RSocketRequester.Builder b, RSocketStrategies rSocketStrategies) {
         return b.dataMimeType(MimeTypeUtils.APPLICATION_JSON)
+                .rsocketFactory(RSocketMessageHandler.clientResponder(rSocketStrategies, new ClientHandler()))
                 .setupRoute("connect")
                 .setupData("user")
-                .connectTcp("localhost", 7000).block();
+                .connectTcp("localhost", 7000)
+                .block();
     }
 
+}
+
+@Slf4j
+class ClientHandler {
+
+    @MessageMapping("status")
+    public Mono<String> statusUpdate(String status) {
+        log.info("Received (" + status + ") at " + LocalDateTime.now());
+        return Mono.just("confirmed").delayElement(Duration.ofSeconds(1));
+    }
 }
 
 @Slf4j
