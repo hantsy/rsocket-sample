@@ -11,12 +11,16 @@ import org.springframework.integration.rsocket.ServerRSocketConnector;
 import org.springframework.integration.rsocket.dsl.RSockets;
 import reactor.core.publisher.Flux;
 
+import java.io.IOException;
+
 @SpringBootApplication
 @EnableIntegration
 public class DemoApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         SpringApplication.run(DemoApplication.class, args);
+        System.out.println("Press any key to exit.");
+        System.in.read();
     }
 
     @Bean
