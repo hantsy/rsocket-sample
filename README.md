@@ -6,15 +6,15 @@ Sample codes of RSocket Java  and Spring RSocket integration.
 
 [Using Rsocket with Spring Boot](https://medium.com/@hantsy/using-rsocket-with-spring-boot-cfc67924d06a)
 
-## Smaple Codes
+## Sample Codes
 
 * **vanilla**  rsocket-java sample
-* **tcp** Spring Boot based application using TCP protocol transport between client and server 
-* **websocket** Using Websocket transport in a Webflux server.
+* **tcp** Spring Boot based application using TCP protocol between client and server 
+* **websocket** Using WebSocket as transport protocol instead in a Webflux server.
 * **security**  Spring Security RSocket integration.
-* **server-requester**  Sending message  to client via Server `RSocketRequster`.
+* **server-requester**  Sending message to client via Server `RSocketRequster`.
 * **integration**  Spring Integration RSocket inbound and outbound gateway.
-* **integration-boot**  Spring Integration RSocket outbound gateway based client and  Spring Boot RSocker based server.
+* **integration-boot**  Spring Integration RSocket outbound gateway based client and  Spring Boot RSocket based server.
 
 ## References
 
