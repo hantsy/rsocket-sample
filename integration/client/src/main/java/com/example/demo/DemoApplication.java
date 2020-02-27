@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.MediaType;
 import org.springframework.integration.config.EnableIntegration;
@@ -13,15 +12,11 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.rsocket.ClientRSocketConnector;
 import org.springframework.integration.rsocket.RSocketInteractionModel;
-import org.springframework.integration.rsocket.ServerRSocketConnector;
 import org.springframework.integration.rsocket.dsl.RSockets;
-import org.springframework.stereotype.Controller;
-import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 
-import java.net.URI;
 import java.util.function.Function;
 
 @SpringBootApplication
@@ -33,14 +28,8 @@ public class DemoApplication {
     }
 
     @Bean
-    public ServerRSocketConnector serverRSocketConnector() {
-        return new ServerRSocketConnector("localhost", 0);
-    }
-
-    @Bean
-    public ClientRSocketConnector clientRSocketConnector(ServerRSocketConnector serverRSocketConnector) {
-        int port = serverRSocketConnector.getBoundPort().block();
-        ClientRSocketConnector clientRSocketConnector = new ClientRSocketConnector("localhost", port);
+    public ClientRSocketConnector clientRSocketConnector() {
+        ClientRSocketConnector clientRSocketConnector = new ClientRSocketConnector("localhost", 7000);
         clientRSocketConnector.setAutoStartup(false);
         return clientRSocketConnector;
     }
@@ -55,16 +44,6 @@ public class DemoApplication {
                         .clientRSocketConnector(clientRSocketConnector))
                 .get();
     }
-
-    @Bean
-    public IntegrationFlow rsocketUpperCaseFlow() {
-        return IntegrationFlows
-                .from(RSockets.inboundGateway("/uppercase")
-                        .interactionModels(RSocketInteractionModel.requestChannel))
-                .<Flux<String>, Flux<String>>transform((flux) -> flux.map(String::toUpperCase))
-                .get();
-    }
-
 }
 
 @RestController
