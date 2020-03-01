@@ -21,8 +21,9 @@ Sample codes of RSocket Java  and Spring RSocket integration.
 * **integration**  Spring Integration RSocket inbound and outbound gateway.
 
   * **client** Sending messages to server via Spring Integration RSocket OutboundGateay.
+  * **client-requester** Simple example using Spring Boot RSocket Starter aka  `RSocketRequestor`.
   * **server** Handling messages via Spring Integration RSocket InboundGateway.
-  * **server-boot** Reusing Spring Boot RSocket autconfiguration and creating `ServerRSocketConnecter`  bean through `ServerRSocketMessageHandler`.
+  * **server-boot**  Similar with **server**, but reuse Spring Boot RSocket Starter  and declare the `ServerRSocketConnecter`  bean through `ServerRSocketMessageHandler`.
   * **server-boot-messsagemapping** Simple example using Spring Boot RSocket Starter aka `@Controller` and `@MessageMapping`.
 
 ## References
