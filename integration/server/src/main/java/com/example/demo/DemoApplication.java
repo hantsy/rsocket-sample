@@ -1,8 +1,11 @@
 package com.example.demo;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
@@ -13,14 +16,20 @@ import reactor.core.publisher.Flux;
 
 import java.io.IOException;
 
-@SpringBootApplication
+@Configuration
+@ComponentScan
+@IntegrationComponentScan
 @EnableIntegration
 public class DemoApplication {
 
     public static void main(String[] args) throws IOException {
-        SpringApplication.run(DemoApplication.class, args);
-        System.out.println("Press any key to exit.");
-        System.in.read();
+        try (ConfigurableApplicationContext ctx = new AnnotationConfigApplicationContext(DemoApplication.class)) {
+            System.out.println("Press any key to exit.");
+            System.in.read();
+        } finally {
+            System.out.println("Exited.");
+        }
+
     }
 
     @Bean
