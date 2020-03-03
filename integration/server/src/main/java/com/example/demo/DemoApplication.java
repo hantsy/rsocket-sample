@@ -4,6 +4,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.ResolvableType;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
@@ -37,6 +38,7 @@ public class DemoApplication {
     public IntegrationFlow rsocketUpperCaseFlow(ServerRSocketConnector serverRSocketConnector) {
         return IntegrationFlows
                 .from(RSockets.inboundGateway("/uppercase")
+                        .requestElementType(ResolvableType.forClass(String.class))
                         .interactionModels(RSocketInteractionModel.requestChannel)
                         .rsocketConnector(serverRSocketConnector)
                 )

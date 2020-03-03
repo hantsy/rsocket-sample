@@ -19,17 +19,12 @@
     </properties>
 
     <dependencies>
-        
+
         <dependency>
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-rsocket</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
