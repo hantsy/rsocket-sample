@@ -27,6 +27,7 @@ public class DemoApplication {
         SpringApplication.run(DemoApplication.class, args);
     }
 
+//    see PR: https://github.com/spring-projects/spring-boot/pull/18834
     @Bean
     public ClientRSocketConnector clientRSocketConnector() {
         ClientRSocketConnector clientRSocketConnector = new ClientRSocketConnector("localhost", 7000);
