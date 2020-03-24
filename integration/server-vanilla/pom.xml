@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>rsocket-sample-integration-client-requester</artifactId>
+    <artifactId>rsocket-sample-integration-server-vanilla</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>rsocket-sample-integration-client-requester</name>
+    <name>rsocket-sample-integration-server-vanilla</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -21,25 +21,14 @@
     <dependencies>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-rsocket</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-rsocket</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.integration</groupId>
