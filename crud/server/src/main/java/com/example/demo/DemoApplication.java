@@ -47,7 +47,6 @@ public class DemoApplication {
 
         return initializer;
     }
-
 }
 
 @Component
@@ -67,7 +66,7 @@ class DataInitializer implements ApplicationRunner {
                                 Post.builder().title("Post tow").content("The content of post tow").build()
                         )
                 )
-				.log()
+                .log()
                 .thenMany(
                         this.posts.findAll()
                 )
