@@ -6,7 +6,7 @@ We will create a *client* and *server* applications to demonstrate the interacti
 
 Firstly let's create the server application. 
 
-You can simply generate a project template from [Spring initialzr](https://start.spring.io), set the following properties.
+You can simply generate a project template from [Spring initializr](https://start.spring.io), set the following properties.
 
 
 * Build: Maven 
@@ -18,7 +18,7 @@ You can simply generate a project template from [Spring initialzr](https://start
 
 In the server application, we will use RSocket to serve a RSocket server via TCP protocol.
 
-Open the *src/main/resources/application.properties*.
+Open the *src/main/resources/application.properties*, add the following properties.
 
 ```properties
 spring.rsocket.server.port=7000
@@ -57,7 +57,7 @@ interface PostRepository extends R2dbcRepository<Post, Integer> {
 }
 ```
 
-Create a `Controller` class to handle the request meassages.
+Create a `Controller` class to handle the request messages.
 
 ```java
 @Controller
@@ -113,7 +113,7 @@ CREATE TABLE posts (id SERIAL PRIMARY KEY, title VARCHAR(255), content VARCHAR(2
 DELETE FROM posts;
 INSERT INTO  posts (title, content) VALUES ('post one in data.sql', 'content of post one in data.sql');
 ```
-> Note: In the Spring 2.3.0.M3,  Spring Data R2dbc is merged in the Spring Data release train. But unfornately, the `ConnectionFactoryInitializer` is NOT ported.
+> Note: In the Spring 2.3.0.M3,  Spring Data R2dbc is merged in the Spring Data release train. But unfortunately, the `ConnectionFactoryInitializer` is NOT ported.
 
 To make the the `schema.sql` and `data.sql` is loaded and executed at the application startup, declare a `ConnectionFactoryInitializer` bean.
 
@@ -141,9 +141,9 @@ mvn spring-boot:run
 
 Next, let's move to the client application.
 
-Similarly, generate a project template from [Spring Initalizr](https://start.spring.io), in the *Dependencies* area, make sure you have choose *WebFlux*, *RSocket*, *Lombok*.
+Similarly, generate a project template from [Spring Initializr](https://start.spring.io), in the *Dependencies* area, make sure you have choose *WebFlux*, *RSocket*, *Lombok*.
 
-The client application is a generic Webflux application, but use `RSocketRequester` to shake hands with the RSocket Servser.
+The client application is a generic Webflux application, but use `RSocketRequester` to shake hands with the RSocket server.
 
 Declare a `RSocketRequester` bean.
 
@@ -201,7 +201,7 @@ class PostClientController {
 }
 ```
 
-Create a  POJO `Post` to present the message payload transfered between client and server side.
+Create a  POJO `Post` to present the message payload transferred between client and server side.
 
 ```java
 @Data
@@ -217,7 +217,7 @@ class Post {
 ```
 Start up the client application.
 
-Try to test the CRUD opertaions by curl.
+Try to test the CRUD operations by curl.
 
 
 ```bash 
@@ -254,7 +254,7 @@ In the server application, create a new method in the `PostRepository`.
 Flux<Post> findByTitleContains(String name);
 ```
 
-And  create a new route to handle this request from client.
+And in the `PostController` ,  create a new route to handle this request from client.
 
 ```java
 class PostController {
@@ -285,6 +285,6 @@ class PostClientController {
 }    
 ```
 
-Now, try to add a `title` request param to access http://localhost:8080/posts.
+Now, try to add an extra `title` request parameter to access http://localhost:8080/posts.
 
 Get the [source codes](https://github.com/hantsy/rsocket-sample/tree/master/crud) from my Github.
