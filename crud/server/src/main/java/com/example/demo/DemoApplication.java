@@ -14,6 +14,7 @@ import org.springframework.data.r2dbc.connectionfactory.init.CompositeDatabasePo
 import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryInitializer;
 import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator;
 import org.springframework.data.r2dbc.repository.Query;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -123,7 +124,7 @@ class PostController {
 
 }
 
-interface PostRepository extends ReactiveCrudRepository<Post, Integer> {
+interface PostRepository extends R2dbcRepository<Post, Integer> {
 
     @Query("SELECT * FROM posts WHERE title like $1")
     Flux<Post> findByTitleContains(String name);
