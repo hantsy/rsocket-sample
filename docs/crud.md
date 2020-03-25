@@ -1,6 +1,6 @@
 # Building a CRUD application with RSocket and Spring
 
-In [the last post](https://medium.com/@hantsy/using-rsocket-with-spring-boot-cfc67924d06a), we explored the basic RSocket support in Spring and Spring Boot. In this post, we will create a CRUD application which is more close to the real world applications.
+In [the last post](https://medium.com/@hantsy/using-rsocket-with-spring-boot-cfc67924d06a), we explored the basic RSocket support in Spring and Spring Boot. In this post, we will create a CRUD application which is closer to the real world applications.
 
 We will create a *client* and *server* applications to demonstrate the interactions between RSocket client and server side.
 
