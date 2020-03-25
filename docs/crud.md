@@ -113,9 +113,9 @@ CREATE TABLE posts (id SERIAL PRIMARY KEY, title VARCHAR(255), content VARCHAR(2
 DELETE FROM posts;
 INSERT INTO  posts (title, content) VALUES ('post one in data.sql', 'content of post one in data.sql');
 ```
-> Note: In the Spring 2.3.0.M3,  Spring Data R2dbc is merged in the Spring Data release train. But unfortunately, the `ConnectionFactoryInitializer` is NOT ported.
+> Note: In the Spring 2.3.0.M3,  Spring Data R2dbc is merged in the Spring Data release train. But unfortunately, the auto-configuration of `ConnectionFactoryInitializer` is NOT ported.
 
-To make the the `schema.sql` and `data.sql` is loaded and executed at the application startup, declare a `ConnectionFactoryInitializer` bean.
+To make sure the the `schema.sql` and `data.sql` are loaded and executed at the application startup, declare a `ConnectionFactoryInitializer` bean yourself.
 
 ```java
 @Bean
@@ -133,19 +133,19 @@ return initializer;
 }
 ```
 
-Now, you can start the server application.
+Start the server application.
 
 ```bash
 mvn spring-boot:run
 ```
 
-Next, let's move to the client application.
+Now let's move to the client application.
 
-Similarly, generate a project template from [Spring Initializr](https://start.spring.io), in the *Dependencies* area, make sure you have choose *WebFlux*, *RSocket*, *Lombok*.
+Similarly, generate a project template from [Spring Initializr](https://start.spring.io), in the *Dependencies* area, ensure you have chosen  *WebFlux*, *RSocket*, *Lombok*.
 
-The client application is a generic Webflux application, but use `RSocketRequester` to shake hands with the RSocket server.
+The client application is a generic Webflux application, but uses `RSocketRequester` to shake hands with the RSocket server.
 
-Declare a `RSocketRequester` bean.
+Declare a `RSocketRequester` bean to connect localhost:7000 via the TCP protocol.
 
 ```java
 @Bean
@@ -156,7 +156,7 @@ public RSocketRequester rSocketRequester(RSocketRequester.Builder b) {
 }
 ```
 
-Create a generic `RestController` and use the `RSocketRequester` to communicate with the RSocket server.
+Create a generic `RestController` and use the `RSocketRequester` bean to communicate with the RSocket server.
 
 ```java
 @Slf4j
@@ -201,7 +201,7 @@ class PostClientController {
 }
 ```
 
-Create a  POJO `Post` to present the message payload transferred between client and server side.
+Create a  POJO `Post` to present the RSocket message payload  that transferred between the client and server side.
 
 ```java
 @Data
