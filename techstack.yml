@@ -1,0 +1,178 @@
+repo_name: hantsy/rsocket-sample
+report_id: 13ded67c9cae6705fc6eedf2e7a45d38
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-31T08:32:29+00:00'
+requested_by: hantsy
+provider: github
+branch: master
+detected_tools_count: 14
+tools:
+- name: Java
+  description: A concurrent, class-based, object-oriented, language specifically designed
+    to have as few implementation dependencies as possible
+  website_url: https://www.java.com
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/995/K85ZWV2F.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample
+  detection_source: Repo Metadata
+- name: SQL
+  description: It is a domain-specific language used in programming
+  website_url: https://en.wikipedia.org/wiki/SQL
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/2271/default_068d33483bba6b81ee13fbd4dc7aab9780896a54.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/server/src/main/resources/data.sql
+  detection_source: crud/server/src/main/resources/data.sql
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: Project Reactor
+  description: Library for building non-blocking applications on JVM
+  website_url: https://projectreactor.io/
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Java Tools
+  image_url: https://img.stackshare.io/service/5807/default_cbd8ab670309059d7e315252d307d409aa40d793.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/server/pom.xml
+  detection_source: crud/server/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: Spring Framework
+  description: An application framework and inversion of control container for the
+    Java platform
+  website_url: https://spring.io/projects/spring-framework
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/2006/spring-framework-project-logo.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/client/pom.xml
+  detection_source: crud/client/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample
+  detection_source: Repo Metadata
+- name: JUnit
+  description: A programmer-oriented testing framework for Java
+  website_url: http://junit.org/
+  license: EPL-1.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/2020/874086.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/server/src/test/resources/junit-platform.properties
+  detection_source: crud/server/src/test/resources/junit-platform.properties
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: Apache Camel
+  description: A versatile open source integration framework
+  website_url: https://camel.apache.org/
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Application Hosting
+  sub_category: Platform as a Service
+  image_url: https://img.stackshare.io/service/3276/xWt1RFo6_400x400.jpg
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/client/src/main/resources/application.properties
+  detection_source: crud/client/src/main/resources/application.properties
+- name: io.projectreactor:reactor-test
+  description: Reactor Test support
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/server/pom.xml
+  detection_source: crud/server/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: org.junit.jupiter:junit-jupiter-engine
+  description: Module "junit-jupiter-engine" of JUnit 5
+  license: EPL-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/integration/server-vanilla/pom.xml
+  detection_source: integration/server-vanilla/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-24 17:05:51.000000000 Z
+- name: org.projectlombok:lombok
+  description: 'Spice up your java: Automatic Resource Management'
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/client/pom.xml
+  detection_source: crud/client/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-security
+  description: Starter for using Spring Security
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/security/pom.xml
+  detection_source: security/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-10-22 13:37:42.000000000 Z
+- name: org.springframework.boot:spring-boot-starter-test
+  description: Starter for testing Spring Boot applications with libraries including
+    JUnit
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/crud/client/pom.xml
+  detection_source: crud/client/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-13 12:27:59.000000000 Z
+- name: org.springframework.integration:spring-integration-test
+  description: Spring Integration Testing Framework
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/integration/client-regular/pom.xml
+  detection_source: integration/client-regular/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2020-03-24 17:05:51.000000000 Z
+- name: org.springframework.security:spring-security-test
+  description: Spring-security-test
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Libraries
+  sub_category: Maven Packages
+  image_url: https://img.stackshare.io/package/maven/image.png
+  detection_source_url: https://github.com/hantsy/rsocket-sample/blob/master/security/pom.xml
+  detection_source: security/pom.xml
+  last_updated_by: hantsy
+  last_updated_on: 2019-10-22 13:37:42.000000000 Z
