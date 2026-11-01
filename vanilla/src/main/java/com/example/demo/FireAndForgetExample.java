@@ -1,9 +1,9 @@
 package com.example.demo;
 
-import io.rsocket.AbstractRSocket;
+import io.rsocket.core.RSocketConnector;
 import io.rsocket.Payload;
+import io.rsocket.core.RSocketServer;
 import io.rsocket.RSocket;
-import io.rsocket.RSocketFactory;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import io.rsocket.transport.netty.server.TcpServerTransport;
 import io.rsocket.util.DefaultPayload;
@@ -15,7 +15,7 @@ public class FireAndForgetExample {
     public static void main(String[] args) throws InterruptedException {
         final int port = 7000;
 
-        final AbstractRSocket responseHandler = new AbstractRSocket() {
+        final RSocket responseHandler = new RSocket() {
             @Override
             public Mono<Void> fireAndForget(Payload payload) {
                 System.out.printf("received fire-forget payload: %s%n", payload.getDataUtf8());
@@ -23,22 +23,18 @@ public class FireAndForgetExample {
             }
         };
 
-        Disposable server = RSocketFactory.receive()
-                .acceptor(
-                        (setupPayload, reactiveSocket)
-                        -> Mono.just(responseHandler)
-                )
-                .transport(TcpServerTransport.create("localhost", port))
-                .start()
+        Disposable server = RSocketServer.create(
+                (setupPayload, reactiveSocket) -> Mono.just(responseHandler)
+        )
+                .bind(TcpServerTransport.create("localhost", port))
                 .subscribe();
         
         System.out.printf("server is started on port:%d%n", port);
 
         RSocket socket
-                = RSocketFactory.connect()
-                        .transport(TcpClientTransport.create("localhost", port))
-                        .start()
-                        .block();
+                = RSocketConnector.create()
+                .connect(TcpClientTransport.create("localhost", port))
+                .block();
         System.out.printf("client is connecting to port:%d%n", port);
         socket.fireAndForget(DefaultPayload.create("Hello"))
                 .block();

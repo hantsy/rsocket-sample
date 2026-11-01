@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import io.rsocket.transport.netty.client.TcpClientTransport;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +25,7 @@ public class IntegrationTests {
 
     @BeforeAll
     public void setup() {
-        this.rSocketRequester = builder.connectTcp("localhost", port).block();
+        this.rSocketRequester = builder.connect(TcpClientTransport.create("localhost", port)).block();
     }
 
     @Test

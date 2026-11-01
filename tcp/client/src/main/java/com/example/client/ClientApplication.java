@@ -1,5 +1,7 @@
 package com.example.client;
 
+import io.rsocket.transport.netty.client.TcpClientTransport;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ public class ClientApplication {
     @Bean
     public RSocketRequester rSocketRequester(RSocketRequester.Builder b) {
         return b.dataMimeType(MimeTypeUtils.APPLICATION_JSON)
-                .connectTcp("localhost", 7000).block();
+                .connect(TcpClientTransport.create("localhost", 7000)).block();
     }
 
 }

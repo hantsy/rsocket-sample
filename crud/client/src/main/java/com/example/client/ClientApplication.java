@@ -1,5 +1,7 @@
 package com.example.client;
 
+import io.rsocket.transport.netty.client.TcpClientTransport;
+
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +24,7 @@ public class ClientApplication {
     @Bean
     public RSocketRequester rSocketRequester(RSocketRequester.Builder b) {
         return b.dataMimeType(MimeTypeUtils.APPLICATION_JSON)
-                .connectTcp("localhost", 7000)
+                .connect(TcpClientTransport.create("localhost", 7000))
                 .block();
     }
 

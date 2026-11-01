@@ -6,9 +6,10 @@
 package com.example.demo;
 
 import static com.example.demo.DemoApplication.PORT;
-import io.rsocket.AbstractRSocket;
+import io.rsocket.core.RSocketServer;
+import io.rsocket.core.RSocketConnector;
+import io.rsocket.RSocket;
 import io.rsocket.Payload;
-import io.rsocket.RSocketFactory;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import io.rsocket.transport.netty.server.TcpServerTransport;
 import io.rsocket.util.DefaultPayload;
@@ -45,7 +46,7 @@ class Producer {
     @EventListener(value = ApplicationReadyEvent.class)
     void init() {
 
-        final AbstractRSocket responseHandler = new AbstractRSocket() {
+        final RSocket responseHandler = new RSocket() {
 
             @Override
             public Mono<Payload> requestResponse(Payload payload) {
@@ -54,13 +55,10 @@ class Producer {
             }
         };
 
-        RSocketFactory.receive()
-                .acceptor(
-                        (setupPayload, reactiveSocket)
-                        -> Mono.just(responseHandler)
+        RSocketServer.create(
+                        (setupPayload, reactiveSocket) -> Mono.just(responseHandler)
                 )
-                .transport(TcpServerTransport.create("localhost", PORT))
-                .start()
+                .bind(TcpServerTransport.create("localhost", PORT))
                 .block();
     }
 }
@@ -71,9 +69,8 @@ class Consumer {
 
     @EventListener(value = ApplicationReadyEvent.class)
     void init() {
-        RSocketFactory.connect()
-                .transport(TcpClientTransport.create("localhost", PORT))
-                .start()
+        RSocketConnector.create()
+                .connect(TcpClientTransport.create("localhost", PORT))
                 .flatMap(r -> r.requestResponse(DefaultPayload.create("Hello")))
                 .subscribe(r -> log.info("handled result:#" + r.getDataUtf8()));
     }

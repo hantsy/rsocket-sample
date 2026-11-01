@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import io.rsocket.transport.netty.client.TcpClientTransport;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.rsocket.context.LocalRSocketServerPort;
@@ -33,7 +35,7 @@ class DemoApplicationTests {
     @Test
     public void retrieveMonoWhenSecureThenDenied() throws Exception {
         RSocketRequester requester = this.requester
-                .connectTcp("localhost", this.port)
+                .connect(TcpClientTransport.create("localhost", this.port))
                 .block();
         String data = "hantsy";
         assertThatThrownBy(
@@ -52,7 +54,7 @@ class DemoApplicationTests {
         RSocketRequester requester = this.requester
                 .rsocketStrategies(builder -> builder.encoder(new BasicAuthenticationEncoder()))
                 .setupMetadata(credentials, BASIC_AUTHENTICATION_MIME_TYPE)
-                .connectTcp("localhost", this.port)
+                .connect(TcpClientTransport.create("localhost", this.port))
                 .block();
         String data = "hantsy";
         assertThatThrownBy(
@@ -71,7 +73,7 @@ class DemoApplicationTests {
         RSocketRequester requester = this.requester
                 .rsocketStrategies(builder -> builder.encoder(new BasicAuthenticationEncoder()))
                 .setupMetadata(credentials, BASIC_AUTHENTICATION_MIME_TYPE)
-                .connectTcp("localhost", this.port)
+                .connect(TcpClientTransport.create("localhost", this.port))
                 .block();
         UsernamePasswordMetadata adminCredentials = new UsernamePasswordMetadata("admin", "password");
 

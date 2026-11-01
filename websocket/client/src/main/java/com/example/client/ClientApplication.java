@@ -1,5 +1,7 @@
 package com.example.client;
 
+import io.rsocket.transport.netty.client.WebsocketClientTransport;
+
 import java.net.URI;
 import java.time.Duration;
 import lombok.AllArgsConstructor;
@@ -29,7 +31,7 @@ public class ClientApplication {
     @Bean
     public RSocketRequester rSocketRequester(RSocketRequester.Builder b) {
         return b.dataMimeType(MimeTypeUtils.APPLICATION_JSON)
-                .connectWebSocket(URI.create("ws://localhost:8081/rsocket")).block();
+                .connect(WebsocketClientTransport.create(URI.create("ws://localhost:8081/rsocket"))).block();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import io.rsocket.transport.netty.client.TcpClientTransport;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.MediaType;
@@ -23,7 +25,7 @@ class HelloController {
     Mono<RSocketRequester> requesterMono;
 
     public HelloController(RSocketRequester.Builder builder) {
-        this.requesterMono = builder.connectTcp("localhost", 7000);
+        this.requesterMono = builder.connect(TcpClientTransport.create("localhost", 7000));
     }
 
     @GetMapping(value = "hello", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
